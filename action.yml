@@ -1,7 +1,7 @@
 name: 'safeAction'
 description: 'This action is checking safety of other actions'
 inputs:
-  who-ti-greet: #id of input
+  who-to-greet: #id of input
     description: ''
     required: true
     default: ''
