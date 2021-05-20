@@ -1,0 +1,13 @@
+name: 'safeAction'
+description: 'This action is checking safety of other actions'
+inputs:
+  who-ti-greet: #id of input
+    description: ''
+    required: true
+    default: ''
+outputs: ''
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'node12'
+  main: 'index.js'
