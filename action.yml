@@ -1,13 +1,8 @@
 name: 'safeAction'
 description: 'This action is checking safety of other actions'
-inputs:
-  who-to-greet: #id of input
-    description: ''
-    required: true
-    default: ''
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  text: # id of output
+    description: 'File:'
 runs:
   using: 'node12'
   main: 'index.js'
