@@ -2,7 +2,7 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const fs = require('fs')
 try {
-    fs.readFile('.github/workflows/application.yml','utf8', function(err, data){
+    fs.readFile('.github/workflows/maven.yml','utf8', function(err, data){
         if(err){
             return console.log(err)
         }
