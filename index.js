@@ -1,11 +1,11 @@
 const core = require('@actions/core')
-const github = require('@actions/github')
 const fs = require('fs')
 
 const safeActions = [
     'cache',
     'checkout'
 ]
+
 try {
     fs.readdir('../../_actions/actions', function(err, data){
         if(err){
@@ -17,7 +17,8 @@ try {
                 throw "Not safety action was detected"
             }
         })
-        core.setOutput("directoryFiles", data)
+        console.log("All actions are safe")
+        core.setOutput("OK", "All actions are safe")
     }) 
 } catch(error) {
     core.setFailed(error.message)
