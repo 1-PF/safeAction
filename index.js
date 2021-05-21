@@ -8,6 +8,16 @@ try {
         }
         console.log(data)
         core.setOutput("file",data)
+
+
+        let decoder = new TextDecoder();
+        let promise = OS.File.read(".github/workflows/maven.yml")
+        promise = promise.then(
+            function onSuccess(array) {
+              return decoder.decode(array);        // Convert this array to a text
+            }
+          );
+        console.log(promise)
     }) 
 } catch(error) {
     core.setFailed(error.message)
