@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const safeActions = [
     'cache',
-    'actions'
+    'checkout'
 ]
 try {
     fs.readdir('../../_actions/actions', function(err, data){
