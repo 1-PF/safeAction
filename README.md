@@ -9,4 +9,8 @@
   <li>If evrything is OK, shows successful message in logs</li>
 </ul>
 <hr />
-<b>Using:</b>
+<b>Example:</b>
+For using safeAction you need to import it to workflow before all actions: <br />
+    <textarea>- name: Checking actions
+        uses: 1-PF/safeAction@v21
+    </textarea>
