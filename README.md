@@ -8,3 +8,5 @@
   <li>If safeAction has founded unallowed action, stops the PipeLine</li>
   <li>If evrything is OK, shows successful message in logs</li>
 </ul>
+<hr />
+<b>Using:</b>
