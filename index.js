@@ -8,6 +8,7 @@ const safeActions = [
 ]
 
 async function postData(url='', data={}){
+    try{
     const response = await fetch(url,{
         method: 'POST',
         mode: 'cors',
@@ -19,6 +20,9 @@ async function postData(url='', data={}){
         body: JSON.stringify(data)
     });
     return response.json();
+    } catch {
+        return null;
+    }
 }
 
 try {
@@ -43,7 +47,7 @@ try {
                             version: version,
                             detail: "BASIC"
                           }).then(data =>{
-                              if(!(data.id && data.version && data.creator && data.commitHash && data.name)){
+                              if(!(data.id && data.version && data.creator && data.commitHash && data.name) || data == null){
                                 throw 'Actions are not safe'
                               }
                           }).catch(err=> {
