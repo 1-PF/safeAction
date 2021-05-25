@@ -12,7 +12,7 @@ async function postData(url){
         const response = await fetch(url)
         return response.json();
     } catch(e){
-        return e.message;
+        return null;
     }
 }
 
@@ -20,6 +20,7 @@ try {
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
         if(err){
+            core.setFailed(err.message)
             return console.log(err)
         }
         creators.forEach(creator => {
@@ -37,7 +38,7 @@ try {
                                 throw new Error('Actions are not safe')
                               }
                           }).catch(err=> {
-                              throw core.setFailed(err.message)
+                                core.setFailed(err.message)
                           })
                     })
                 })
