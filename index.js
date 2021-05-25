@@ -34,7 +34,9 @@ try {
                             return console.log(err)
                         }
                         postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
-                              if(!(data.id && data.version && data.creator && data.commitHash && data.name == action) || data == null){
+                            //Here we need to add == for all data (does not work for mock data)
+                              if(!(data.id && data.version == version && data.creator == creator && data.commitHash && data.name == action) || data == null){
+                                console.log(data.name)
                                 throw new Error('Actions are not safe')
                               }
                           }).catch(err=> {
