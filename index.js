@@ -7,21 +7,12 @@ const safeActions = [
     'checkout'
 ]
 
-async function postData(url='', data={}){
+async function postData(url){
     try{
-    const response = await fetch(url,{
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-chache',
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: JSON.stringify(data)
-    });
-    return response.json();
-    } catch(err){
-        return err;
+        const response = await fetch(url)
+        return response.json();
+    } catch(e){
+        return e.message;
     }
 }
 
@@ -41,12 +32,7 @@ try {
                         if(err){
                             return console.log(err)
                         }
-                        postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/search',{
-                            creator: creator,
-                            name: action,
-                            version: version,
-                            detail: "BASIC"
-                          }).then(data =>{
+                        postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
                               if(!(data.id && data.version && data.creator && data.commitHash && data.name) || data == null){
                                 throw new Error('Actions are not safe')
                               }
