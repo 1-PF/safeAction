@@ -20,8 +20,8 @@ async function postData(url='', data={}){
         body: JSON.stringify(data)
     });
     return response.json();
-    } catch {
-        return null;
+    } catch(err){
+        return err;
     }
 }
 
