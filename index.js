@@ -28,14 +28,22 @@ try {
                             name: action,
                             version: version,
                             detail: "BASIC"
-                        }).then()
+                        }).then(response => {
+                            if(response.name == action 
+                            && response.creator == creator 
+                            && response.version 
+                            && response.commitHash 
+                            && response.id){
+                                console.log("All actions are safe")
+                                core.setOutput("OK", "All actions are safe")
+                            } else{
+                                throw 'Actions are not safe'
+                            }
+                        })
                     })
                 })
             })
         })
-        
-        console.log("All actions are safe")
-        core.setOutput("OK", "All actions are safe")
     }) 
 } catch(error) {
     core.setFailed(error.message)
