@@ -7,6 +7,20 @@ const safeActions = [
     'checkout'
 ]
 
+async function postData(url='', data={}){
+    const response = await fetch(url,{
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-chache',
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data)
+    });
+    return response.json();
+}
+
 try {
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
@@ -23,23 +37,16 @@ try {
                         if(err){
                             return console.log(err)
                         }
-                        axios.post('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/search',{
+                        postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/search',{
                             creator: creator,
                             name: action,
                             version: version,
-                            detail: "BASIC"
-                        }).then(response => {
-                            if(response.name
-                            && response.creator
-                            && response.version 
-                            && response.commitHash 
-                            && response.id){
-                                console.log("All actions are safe")
-                                core.setOutput("OK", "All actions are safe")
-                            } else{
-                                throw "Actions are not safe"
-                            }
-                        })
+                            "detail": "BASIC"
+                          }).then(data =>{
+                              if(!(data.id && data.version && data.creator && data.commitHash && data.name)){
+                                throw 'Actions are not safe'
+                              }
+                          })
                     })
                 })
             })
