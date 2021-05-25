@@ -30,14 +30,14 @@ try {
                             detail: "BASIC"
                         }).then(response => {
                             if(response.name
-                            && response.creator == creator 
+                            && response.creator
                             && response.version 
                             && response.commitHash 
                             && response.id){
                                 console.log("All actions are safe")
                                 core.setOutput("OK", "All actions are safe")
                             } else{
-                                throw 'Actions are not safe'
+                                throw "Actions are not safe"
                             }
                         })
                     })
