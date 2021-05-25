@@ -1,6 +1,5 @@
 const core = require('@actions/core')
 const fs = require('fs')
-const fetch = require('fetch')
 
 const safeActions = [
     'cache',
