@@ -37,7 +37,7 @@ try {
                                 throw new Error('Actions are not safe')
                               }
                           }).catch(err=> {
-                              throw err
+                              throw core.setFailed(err.message)
                           })
                     })
                 })
