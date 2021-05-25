@@ -48,7 +48,7 @@ try {
                             detail: "BASIC"
                           }).then(data =>{
                               if(!(data.id && data.version && data.creator && data.commitHash && data.name) || data == null){
-                                throw 'Actions are not safe'
+                                throw new Error('Actions are not safe')
                               }
                           }).catch(err=> {
                               throw err
