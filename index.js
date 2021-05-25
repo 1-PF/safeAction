@@ -29,7 +29,7 @@ try {
                             version: version,
                             detail: "BASIC"
                         }).then(response => {
-                            if(response.name == action 
+                            if(response.name
                             && response.creator == creator 
                             && response.version 
                             && response.commitHash 
