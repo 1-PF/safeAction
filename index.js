@@ -1,5 +1,6 @@
 const core = require('@actions/core')
 const fs = require('fs')
+const axios = require('axios')
 
 const safeActions = [
     'cache',
@@ -7,25 +8,35 @@ const safeActions = [
 ]
 
 try {
-    // fs.readdir('../../_actions/actions', function(err, data){
-    //     if(err){
-    //         return console.log(err)
-    //     }
-    //     //console.log(data)
-    //     data.forEach(action => {
-    //         if(!safeActions.includes(action)){
-    //             throw "Not safety action was detected"
-    //         }
-    //     })
-    //     console.log("All actions are safe")
-    //     core.setOutput("OK", "All actions are safe")
-    // }) 
-    fs.readFile('.github/workflows/aaplication.yml','utf8', function(err, data){
+    let path = '../../_actions/'
+    fs.readdir(path, function(err, creators){
         if(err){
             return console.log(err)
         }
-        console.log(data)
-    })
+        creators.forEach(creator => {
+            fs.readdir(path+creator,function(err, actions){
+                if(err){
+                    return console.log(err)
+                }
+                actions.forEach(action => {
+                    fs.readdir(path+creator+'/'+action, function(err, version){
+                        if(err){
+                            return console.log(err)
+                        }
+                        axios.post('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/search',{
+                            creator: creator,
+                            name: action,
+                            version: version,
+                            detail: "BASIC"
+                        }).then()
+                    })
+                })
+            })
+        })
+        
+        console.log("All actions are safe")
+        core.setOutput("OK", "All actions are safe")
+    }) 
 } catch(error) {
     core.setFailed(error.message)
 }
