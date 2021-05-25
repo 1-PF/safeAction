@@ -1,6 +1,6 @@
 const core = require('@actions/core')
 const fs = require('fs')
-const axios = require('axios')
+const fetch = require('fetch')
 
 const safeActions = [
     'cache',
@@ -41,11 +41,13 @@ try {
                             creator: creator,
                             name: action,
                             version: version,
-                            "detail": "BASIC"
+                            detail: "BASIC"
                           }).then(data =>{
                               if(!(data.id && data.version && data.creator && data.commitHash && data.name)){
                                 throw 'Actions are not safe'
                               }
+                          }).catch(err=> {
+                              throw err
                           })
                     })
                 })
