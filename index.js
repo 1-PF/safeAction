@@ -33,7 +33,7 @@ try {
                             return console.log(err)
                         }
                         postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
-                              if(!(data.id && data.version && data.creator && data.commitHash && data.name) || data == null){
+                              if(!(data.id && data.version && data.creator && data.commitHash && data.name == action) || data == null){
                                 throw new Error('Actions are not safe')
                               }
                           }).catch(err=> {
