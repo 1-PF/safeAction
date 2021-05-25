@@ -39,6 +39,7 @@ try {
                                 console.log(data.name)
                                 throw new Error('Actions are not safe')
                               }
+                              console.log(data.name)
                           }).catch(err=> {
                                 core.setFailed(err.message)
                           })
