@@ -20,6 +20,7 @@ try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
     let appMode = core.getInput('mode')
+    console.log(appMode)
     if(appMode != 'alert' || appMode != 'stop')
         appMode = 'stop'
     
@@ -40,7 +41,7 @@ try {
                             return console.log(err)
                         }
                         // Does not work url with actions
-                        
+
                         // postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
                         //     //Here we need to add == for all data (does not work for mock data)
                         //       if(!(data.id && data.creator == creator && data.commitHash && data.name == action) || data == null){
