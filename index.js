@@ -50,7 +50,7 @@ try {
         })
     }) 
 } catch(error) {
-    if('Cannot read property \'id\' of null') {
+    if(error.message == 'Cannot read property \'id\' of null') {
         return
     }
     core.setFailed(error.message)
