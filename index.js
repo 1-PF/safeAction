@@ -17,8 +17,7 @@ async function postData(url){
 }
 
 try {
-    const githubToken = core.getInput('github-token')
-    console.log(githubToken)
+    const githubToken = core.getInput('github-token') //WORKS!!!
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
         if(err){
@@ -51,5 +50,8 @@ try {
         })
     }) 
 } catch(error) {
+    if('Cannot read property \'id\' of null') {
+        return
+    }
     core.setFailed(error.message)
 }
