@@ -5,6 +5,10 @@ inputs:
     description: 'Github token'
     required: false
     default: ''
+  mode:
+    description: 'User needs to choose mode: Stop workfow or only alert send'
+    required: true
+    default: 'stop'
 outputs:
   text: # id of output
     description: 'File:'
