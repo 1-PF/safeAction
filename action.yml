@@ -1,5 +1,10 @@
 name: 'safeAction'
 description: 'This action is checking safety of other actions'
+inputs:
+  github-token:
+    description: 'Github token'
+    required: false
+    default: ''
 outputs:
   text: # id of output
     description: 'File:'
