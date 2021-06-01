@@ -12,4 +12,5 @@
 <b>Example:</b>
 For using safeAction you need to import it to workflow before all actions: <br />
 <pre>- name: Checking actions
-  uses: 1-PF/safeAction@v21</pre>
+  uses: 1-PF/safeAction@v21
+    github-token: secrets.github_token (optional)</pre>
