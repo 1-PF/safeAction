@@ -42,26 +42,26 @@ try {
                         }
                         // Does not work url with actions
 
-                        // postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
-                        //     //Here we need to add == for all data (does not work for mock data)
-                        //       if(!(data.id && data.creator == creator && data.commitHash && data.name == action) || data == null){
-                        //         if(!(creator == '1-PF' && action == 'safeAction')) {
-                        //             if(appMode == 'stop') {
-                        //                 console.log(data.name + "!=" + actions +", "+actions+"is not OK")
-                        //                 throw new Error('Actions are not safe')
-                        //             }
-                        //             if(appMode == 'alert') {
-                        //                 console.log(data.name + "!=" + actions +", "+actions+"is not OK")
-                        //                 // Here needs to alert!!!
-                        //                 // HOOK and ETC.!!!
-                        //             }
-                        //         } 
-                        //       } else {
-                        //         console.log(data.name+"is OK")
-                        //       }
-                        //   }).catch(err=> {
-                        //         core.setFailed(err.message)
-                        //   })
+                        postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
+                            //Here we need to add == for all data (does not work for mock data)
+                              if(!(data.id && data.creator == creator && data.commitHash && data.name == action) || data == null){
+                                if(!(creator == '1-PF' && action == 'safeAction')) {
+                                    if(appMode == 'stop') {
+                                        console.log(data.name + "!=" + actions +", "+actions+"is not OK")
+                                        throw new Error('Actions are not safe')
+                                    }
+                                    if(appMode == 'alert') {
+                                        console.log(data.name + "!=" + actions +", "+actions+"is not OK")
+                                        // Here needs to alert!!!
+                                        // HOOK and ETC.!!!
+                                    }
+                                } 
+                              } else {
+                                console.log(data.name+"is OK")
+                              }
+                          }).catch(err=> {
+                                core.setFailed(err.message)
+                          })
                     })
                 })
             })
