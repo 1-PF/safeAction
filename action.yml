@@ -5,6 +5,9 @@ inputs:
     description: 'Github token'
     required: false
     default: ''
+outputs:
+  text: # id of output
+    description: 'File:'
 runs:
   using: 'node12'
   main: 'index.js'
