@@ -19,7 +19,7 @@ async function postData(url){
 try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
-    const appMode = core.getInput('mode')
+    let appMode = core.getInput('mode')
     if(appMode != 'alert' || appMode != 'stop')
         appMode = 'stop'
     
