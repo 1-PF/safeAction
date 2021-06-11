@@ -27,7 +27,7 @@ try {
     const githubToken = core.getInput('github-token') //WORKS!!!
     let appMode =  core.getInput('mode')
     console.log(appMode)
-    if(appMode !== 'alert' || appMode !== 'stop'){
+    if(appMode !== 'alert' && appMode !== 'stop'){
         appMode = 'stop'
     }
     console.log(appMode)
