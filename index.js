@@ -49,14 +49,16 @@ try {
                             return console.log(err)
                         }
                         postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then(data =>{
+                            console.log("------------------------------------------------------")
+                            console.log(data)
                             if(data == null) {
                                 if(appMode === 'stop') {
-                                    console.log('Action '+ creator+'/'+action+'@'+version[0] +' is not safe')
                                     throw new Error('Action '+ creator+'/'+action+'@'+version[0] +' is not safe');
                                 } else if(appMode === 'alert') {
                                     console.log('Action '+ creator+'/'+action+'@'+version[0] +' is not safe')
                                 }
                             }
+                            console.log("------------------------------------------------------")
                         }).catch(err=> {
                             core.setFailed(err.message)
                         })
