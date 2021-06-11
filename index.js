@@ -34,13 +34,13 @@ try {
                 fs.readdir('../../_PipelineMapping/'+creator, function(err, allCreatorRepos){
                     if(allCreatorRepos.includes(name)) {
                         nameOfRepo = creator+'/'+name
+                        console.log(nameOfRepo)
                     }
                 })
             })
         })
     })
 
-    console.log(nameOfRepo)
 
     let appMode =  core.getInput('mode')
     if(appMode !== 'alert' && appMode !== 'stop'){
