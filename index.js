@@ -14,9 +14,7 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        console.log("HERE?")
-        console.log(response)
-        return response.json();
+        return response.data;
     } catch(e){
         return null;
     }
