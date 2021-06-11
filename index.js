@@ -37,12 +37,13 @@ try {
                     console.log(allCreatorRepos)
                     if(allCreatorRepos.includes(name[0])) {
                         nameOfRepo = creator+'/'+name[0]
+                        console.log(nameOfRepo+"1")
                     }
                 })
             })
         })
     })
-    console.log(nameOfRepo)
+    console.log(nameOfRepo+"2")
 
 
     let appMode =  core.getInput('mode')
