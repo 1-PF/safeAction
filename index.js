@@ -35,14 +35,14 @@ try {
             creators.forEach(creator => {
                 fs.readdir('../../_PipelineMapping/'+creator, function(err, allCreatorRepos){
                     console.log(allCreatorRepos)
-                    if(allCreatorRepos.includes(name)) {
-                        nameOfRepo = creator+'/'+name
-                        console.log(nameOfRepo)
+                    if(allCreatorRepos.includes(name[0])) {
+                        nameOfRepo = creator+'/'+name[0]
                     }
                 })
             })
         })
     })
+    console.log(nameOfRepo)
 
 
     let appMode =  core.getInput('mode')
