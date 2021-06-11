@@ -25,12 +25,12 @@ async function postData(url, creator, version, action){
 try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
-    let appMode =  async () => {return await core.getInput('mode')}
-    
+    let appMode =  core.getInput('mode')
+    console.log(core.getInput('mode'))
     if(appMode != 'alert' || appMode != 'stop'){
         appMode = 'stop'
     }  
-    console.log(appMode)
+    
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
         if(err){
