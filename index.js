@@ -14,7 +14,9 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        return response.data[0];
+        if(data.length != 0)
+            return response.data[0];
+        return null;
     } catch(e){
         return null;
     }
