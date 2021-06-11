@@ -27,7 +27,8 @@ async function postData(url, creator, version, action){
 try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
-    let nameOfRepo = "";
+
+    //This code is asynchronius and only example, So we need to cut and past it into our result (For example in WebHookPost)
     fs.readdir('../', function(err, name){
         console.log(name)
         fs.readdir('../../_PipelineMapping/', function(err, creators) {
@@ -36,14 +37,13 @@ try {
                 fs.readdir('../../_PipelineMapping/'+creator, function(err, allCreatorRepos){
                     console.log(allCreatorRepos)
                     if(allCreatorRepos.includes(name[0])) {
-                        nameOfRepo = creator+'/'+name[0]
-                        console.log(nameOfRepo+"1")
+                        const nameOfRepo = creator+'/'+name[0]
+                        console.log(nameOfRepo)
                     }
                 })
             })
         })
     })
-    console.log(nameOfRepo+"2")
 
 
     let appMode =  core.getInput('mode')
