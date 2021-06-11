@@ -44,10 +44,7 @@ try {
                         if(err){
                             return console.log(err)
                         }
-                        console.log(creator)
-                        console.log(action)
-                        console.log(version)
-                        postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version, action).then(data =>{
+                        postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then(data =>{
                             console.log(data);
                         }).catch(err=> {
                             core.setFailed(err.message)
