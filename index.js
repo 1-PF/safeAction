@@ -26,10 +26,10 @@ try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
     let appMode = core.getInput('mode')
-    console.log(appMode)
+    
     if(appMode != 'alert' || appMode != 'stop')
         appMode = 'stop'
-    
+    console.log(appMode)
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
         if(err){
