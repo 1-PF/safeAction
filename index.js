@@ -14,9 +14,7 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        console.log("test")
-        console.log("Data length:"+data.length)
-        if(data.length !== 0)
+        if(response.data.length !== 0)
         {
             return response.data[0];
         } 
