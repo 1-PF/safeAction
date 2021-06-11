@@ -14,7 +14,7 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        return response.data;
+        return response.data[0];
     } catch(e){
         return null;
     }
@@ -45,7 +45,7 @@ try {
                             return console.log(err)
                         }
                         postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then(data =>{
-                            console.log(data);
+                            console.log(data.creator);
                         }).catch(err=> {
                             core.setFailed(err.message)
                         })
