@@ -31,7 +31,7 @@ try {
     fs.readdir('../', function(err, name){
         fs.readdir('../../_PipelineMapping', function(err, creators) {
             creators.forEach(creator => {
-                fs.readdir('../../_PipelineMapping'+creator, function(err, allCreatorRepos){
+                fs.readdir('../../_PipelineMapping/'+creator, function(err, allCreatorRepos){
                     if(allCreatorRepos.includes(name)) {
                         nameOfRepo = creator+'/'+name
                     }
