@@ -5,10 +5,10 @@ const axios = require('axios');
 async function postData(url, creator, version, action){
     try{
         const response = await axios.post(url, {
-            'creator': creator,
-            'name': action,
-            'version': version,
-            'detail': 'FULL'
+            creator: creator,
+            name: action,
+            version: version,
+            detail: 'FULL'
         }, {
             headers: {
                 'Content-Type': 'application/json'
@@ -44,6 +44,9 @@ try {
                         if(err){
                             return console.log(err)
                         }
+                        console.log(creator)
+                        console.log(action)
+                        console.log(version[0])
                         postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then(data =>{
                             console.log(data);
                         }).catch(err=> {
