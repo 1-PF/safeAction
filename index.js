@@ -4,9 +4,6 @@ const axios = require('axios');
 
 async function postData(url, creator, version, action){
     try{
-        console.log(creator)
-        console.log(action)
-        console.log(version)
         const response = await axios.post(url, {
             creator: creator,
             name: action,
@@ -17,7 +14,8 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        console.log(response.json())
+        console.log("HERE?")
+        console.log(response)
         return response.json();
     } catch(e){
         return null;
