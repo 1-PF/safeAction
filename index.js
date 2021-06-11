@@ -1,15 +1,19 @@
 const core = require('@actions/core')
 const fs = require('fs')
-const fetch = require("node-fetch");
+const axios = require('axios');
 
-const safeActions = [
-    'cache',
-    'checkout'
-]
-
-async function postData(url){
+async function postData(url, creator, version, action){
     try{
-        const response = await fetch(url)
+        const response = await axios.post(url, {
+            'creator': creator,
+            'name': action,
+            'version': version,
+            'detail': 'FULL'
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         return response.json();
     } catch(e){
         return null;
@@ -40,28 +44,11 @@ try {
                         if(err){
                             return console.log(err)
                         }
-                        // Does not work url with actions
-
-                        postData('https://actoins-results-provider-arp-be.azuremicroservices.io/api/actions/'+action).then(data =>{
-                            //Here we need to add == for all data (does not work for mock data)
-                              if(!(data.id && data.creator == creator && data.commitHash && data.name == action) || data == null){
-                                if(!(creator == '1-PF' && action == 'safeAction')) {
-                                    if(appMode == 'stop') {
-                                        console.log(data.name + "!=" + actions +", "+actions+"is not OK")
-                                        throw new Error('Actions are not safe')
-                                    }
-                                    if(appMode == 'alert') {
-                                        console.log(data.name + "!=" + actions +", "+actions+"is not OK")
-                                        // Here needs to alert!!!
-                                        // HOOK and ETC.!!!
-                                    }
-                                } 
-                              } else {
-                                console.log(data.name+"is OK")
-                              }
-                          }).catch(err=> {
-                                core.setFailed(err.message)
-                          })
+                        postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version, action).then(data =>{
+                            console.log(data);
+                        }).catch(err=> {
+                            core.setFailed(err.message)
+                        })
                     })
                 })
             })
