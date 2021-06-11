@@ -14,7 +14,8 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        console.log('Data length:'+data.length)
+        console.log("test")
+        console.log("Data length:"+data.length)
         if(data.length !== 0)
         {
             return response.data[0];
@@ -29,11 +30,9 @@ try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
     let appMode =  core.getInput('mode')
-    console.log(appMode)
     if(appMode !== 'alert' && appMode !== 'stop'){
         appMode = 'stop'
     }
-    console.log(appMode)
     
     let path = '../../_actions/'
     fs.readdir(path, function(err, creators){
@@ -52,7 +51,7 @@ try {
                             return console.log(err)
                         }
                         postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then((data) =>{
-                            console.log(data)
+                            //console.log(data)
                             if(data === null) {
                                 if(appMode === 'stop') {
                                     throw new Error('Action '+ creator+'/'+action+'@'+version[0] +' is not safe');
