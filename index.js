@@ -51,10 +51,12 @@ try {
                         postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then((data) =>{
                             //console.log(data)
                             if(data === null) {
-                                if(appMode === 'stop') {
-                                    throw new Error('Action '+ creator+'/'+action+'@'+version[0] +' is not safe');
-                                } else if(appMode === 'alert') {
-                                    console.log('Action '+ creator+'/'+action+'@'+version[0] +' is not safe')
+                                if(!(creator === '1-PF' && action === 'safeAction')) {
+                                    if(appMode === 'stop') {
+                                        throw new Error('Action '+ creator+'/'+action+'@'+version[0] +' is not safe');
+                                    } else if(appMode === 'alert') {
+                                        console.log('Action '+ creator+'/'+action+'@'+version[0] +' is not safe')
+                                    }
                                 }
                             }
                         }).catch(err=> {
