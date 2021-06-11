@@ -27,6 +27,21 @@ async function postData(url, creator, version, action){
 try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
+    let nameOfRepo = "";
+    fs.readdir('../', function(err, name){
+        fs.readdir('../../_PipelineMapping', function(err, creators) {
+            creators.forEach(creator => {
+                fs.readdir('../../_PipelineMapping'+creator, function(err, allCreatorRepos){
+                    if(allCreatorRepos.includes(name)) {
+                        nameOfRepo = creator+'/'+name
+                    }
+                })
+            })
+        })
+    })
+
+    console.log(nameOfRepo)
+
     let appMode =  core.getInput('mode')
     if(appMode !== 'alert' && appMode !== 'stop'){
         appMode = 'stop'
