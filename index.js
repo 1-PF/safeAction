@@ -14,8 +14,11 @@ async function postData(url, creator, version, action){
                 'Content-Type': 'application/json'
             }
         })
-        if(data.length != 0)
+        console.log(response.data)
+        if(data.length !== 0)
+        {
             return response.data[0];
+        } 
         return null;
     } catch(e){
         return null;
@@ -49,8 +52,6 @@ try {
                             return console.log(err)
                         }
                         postData('https://arp-be-prod.azurewebsites.net/api/actions/search', creator, version[0], action).then(data =>{
-                            console.log("------------------------------------------------------")
-                            console.log(data)
                             if(data == null) {
                                 if(appMode === 'stop') {
                                     throw new Error('Action '+ creator+'/'+action+'@'+version[0] +' is not safe');
@@ -58,7 +59,6 @@ try {
                                     console.log('Action '+ creator+'/'+action+'@'+version[0] +' is not safe')
                                 }
                             }
-                            console.log("------------------------------------------------------")
                         }).catch(err=> {
                             core.setFailed(err.message)
                         })
