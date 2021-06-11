@@ -22,14 +22,10 @@ async function postData(url, creator, version, action){
     }
 }
 
-async function getMode(){
-    return await core.getInput('mode')
-}
-
 try {
     //Additional info
     const githubToken = core.getInput('github-token') //WORKS!!!
-    let appMode = await getMode()
+    let appMode =  async () => {return await core.getInput('mode')}
     
     if(appMode != 'alert' || appMode != 'stop'){
         appMode = 'stop'
