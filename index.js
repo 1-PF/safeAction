@@ -29,9 +29,12 @@ try {
     const githubToken = core.getInput('github-token') //WORKS!!!
     let nameOfRepo = "";
     fs.readdir('../', function(err, name){
-        fs.readdir('../../_PipelineMapping', function(err, creators) {
+        console.log(name)
+        fs.readdir('../../_PipelineMapping/', function(err, creators) {
+            console.log(creators)
             creators.forEach(creator => {
                 fs.readdir('../../_PipelineMapping/'+creator, function(err, allCreatorRepos){
+                    console.log(allCreatorRepos)
                     if(allCreatorRepos.includes(name)) {
                         nameOfRepo = creator+'/'+name
                         console.log(nameOfRepo)
