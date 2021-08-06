@@ -4,7 +4,7 @@ inputs:
   mode:
     description: 'User needs to choose mode: Stop workfow or only alert send'
     required: true
-    default: 'stop'
+    default: 'SAFE'
   github-token:
     description: 'Github token'
     required: false
