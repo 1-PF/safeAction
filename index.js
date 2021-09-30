@@ -1,7 +1,7 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const axios = require('axios');
-const searchUrl = 'http://arp-services.westeurope.azurecontainer.io:8080/api/actions/search';
+const searchUrl = 'https://safeaction.1pf.cz/api/actions/search';
 const possibleModes = ['SAFE', 'INFORMATION', 'IGNORE'];
 
 async function postData(url, creator, version, action) {
