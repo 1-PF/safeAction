@@ -1,24 +1,23 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const axios = require('axios');
-const searchUrl = 'https://safeaction.1pf.cz/api/actions/search';
+const validateUrl = 'https://safeaction.1pf.cz/api/actions/validate';
 const possibleModes = ['SAFE', 'INFORMATION', 'IGNORE'];
 
-async function postData(url, creator, version, action) {
+async function callApi(actionsToCheck, authorization) {
     try {
-        const response = await axios.post(url, {
-            creator: creator,
-            name: action,
-            version: version,
-            detail: 'BASIC'
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
+        const response = await axios.post(validateUrl, actionsToCheck,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authorization
+                }
             }
-        })
+        )
 
         return response.data
     } catch (e) {
+        core.error(e)
         console.log("Error while getting action information")
         return null;
     }
@@ -33,9 +32,22 @@ function logWarnOrErr(errMsg, appMode) {
     }
 }
 
+function getOtherTestedVersions(action) {
+    if (action.otherTestedVersions && action.otherTestedVersions.length > 0) {
+        core.info("Available versions of " + action.name + " are: ")
+        core.info(action.otherTestedVersions)
+    }
+}
+
 try {
     //Additional info
-    const githubToken = core.getInput('github-token') //WORKS!!!
+    const authorization = core.getInput('authorization')
+
+    if (!authorization) {
+        core.warning("No authorization provided. SafeAction will check just first 3 actions in pipeline.")
+        core.warning("If an action is not found or is not OK SafeAction will not provide alternative tested versions.")
+        core.warning("For generating your own token, please visit:")
+    }
 
     let appMode = core.getInput('mode')
 
@@ -49,47 +61,53 @@ try {
     }
 
     let path = '../../_actions/'
-    fs.readdir(path, function (err, creators) {
-        core.info("Found creators in pipeline: " + creators)
+    const creators = fs.readdirSync(path)
+    core.info("Found creators:")
+    core.info(creators)
+    const actionsApiModelArray = []
+    if (creators != null) {
         const filteredCreators = creators.filter(creator => creator != "1-PF")
-        if (err) {
-            core.setFailed(err.message)
-            return console.log(err)
-        }
+
         filteredCreators.forEach(creator => {
-            fs.readdir(path + creator, function (err, actions) {
-                if (err) {
-                    return console.log(err)
+            fs.readdirSync(path + creator).forEach(action => {
+                const actionVersion = fs.readdirSync(path + creator + '/' + action)[0]
+
+                const actionModel = {
+                    name: action,
+                    creator: creator,
+                    version: actionVersion
                 }
-                actions.forEach(action => {
-                    fs.readdir(path + creator + '/' + action, function (err, version) {
-                        if (err) {
-                            return console.log(err)
-                        }
-                        postData(searchUrl, creator, version[0], action).then((data) => {
-                            const actionLabel = creator + "/" + action + "@" + version[0];
-                            if (data.length === 0) {
-                                logWarnOrErr("Action " + actionLabel + " WAS NOT MARKED AS SAFEACTION", appMode)
-                                postData(searchUrl, creator, null, action).then(res => {
-                                    core.info("Available versions of " + action + " are: ")
-                                    core.info(res.map(action => action.version))
-                                })
-                            } else if (data.length > 0) {
-                                if (data[0].overallResult !== 'OK') {
-                                    logWarnOrErr("Action " + actionLabel + " NOT SAFE.", appMode)
-                                } else if (data[0].overallResult == 'OK') {
-                                    core.info("Action " + actionLabel + " IS SAFE.")
-                                }
-                            } else if (!data) {
-                                logWarnOrErr("Could not verify action, an error occured while retrieving action results")
-                            }
-                        }).catch(err => {
-                            core.setFailed(err.message)
-                        })
-                    })
-                })
+                actionsApiModelArray.push(actionModel)
             })
         })
+    } else {
+        logWarnOrErr("No creators found in pipeline!", appMode)
+    }
+    core.info("Found actions:")
+    console.log(actionsApiModelArray)
+    callApi(actionsApiModelArray, authorization).then(response => {
+        if (response) {
+            response.forEach(action => {
+                const actionLabel = action.creator + "/" + action.name + "@" + action.version;
+                const result = action.overallResult
+                if (result === "OK" || result === "PARTIALLY_OK") {
+                    core.info("\u001B[32mAction " + actionLabel + " IS " + result + ".")
+                } else if (result === "NOT_FOUND") {
+                    logWarnOrErr("Action " + actionLabel + " WAS NOT MARKED AS SAFEACTION", appMode)
+                    getOtherTestedVersions(action)
+                } else if (result === "NOT_OK") {
+                    logWarnOrErr("Action " + actionLabel + " NOT SAFE.", appMode)
+                    getOtherTestedVersions(action)
+                } else if (result === "NOT_EVALUATED") {
+                    logWarnOrErr("Action " + actionLabel + " WAS NOT EVALUATED", appMode)
+                    getOtherTestedVersions(action)
+                }
+            })
+        } else {
+            logWarnOrErr("ERROR WHILE GETTING ACTIONS INFORMATION, NO ACTIONS WERE VALIDATED", appMode)
+        }
+    }).catch(err => {
+        core.setFailed(err.message)
     })
 } catch (error) {
     core.setFailed(error.message)
