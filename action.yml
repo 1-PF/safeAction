@@ -5,10 +5,9 @@ inputs:
     description: 'User needs to choose mode: Stop workfow or only alert send'
     required: true
     default: 'SAFE'
-  github-token:
-    description: 'Github token'
+  authorization:
+    description: 'Token generated for your clientId. If no token is provided, action will check only first 3 actions in your pipeline.'
     required: false
-    default: ''
 outputs:
   text: # id of output
     description: 'File:'
